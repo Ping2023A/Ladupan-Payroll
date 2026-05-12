@@ -107,3 +107,27 @@ exports.updateEmployee = async (req, res) => {
     });
   }
 };
+
+// DELETE EMPLOYEE
+exports.deleteEmployee = async (req, res) => {
+  try {
+    const employee = await User.findById(req.params.id);
+
+    if (!employee) {
+      return res.status(404).json({
+        message: "Employee not found",
+      });
+    }
+
+    await User.findByIdAndDelete(req.params.id);
+
+    res.json({
+      message: "Employee deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to delete employee",
+      error: error.message,
+    });
+  }
+};

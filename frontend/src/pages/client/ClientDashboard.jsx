@@ -1,86 +1,90 @@
+import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "../../styles/client.css";
 
 const ClientDashboard = () => {
   const { user } = useAuth();
 
+  const today = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
-    <div style={{ padding: "10px" }}>
-      <h1>
-        Welcome, {user?.firstName} {user?.lastName}
-      </h1>
+    <div className="client-dashboard-page">
+      <div className="client-welcome-card">
+        <div>
+          <h1>
+            Welcome, {user?.firstName || "Employee"} 👋
+          </h1>
+          <p>Ladupan Payroll Employee Portal</p>
+        </div>
 
-      <p>
-        Ladupan Payroll Employee Portal
-      </p>
+        <span>{today}</span>
+      </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns:
-            "repeat(auto-fit, minmax(220px, 1fr))",
-          gap: "20px",
-          marginTop: "30px",
-        }}
-      >
-        <div
-          style={{
-            background: "white",
-            padding: "25px",
-            borderRadius: "14px",
-            boxShadow:
-              "0 5px 15px rgba(0,0,0,0.08)",
-          }}
-        >
+      <h2 className="client-section-title">Quick Access</h2>
+
+      <div className="client-quick-grid">
+        <Link to="/client/attendance" className="client-quick-card">
+          <div className="client-icon purple">⏰</div>
           <h3>Attendance</h3>
-          <p>
-            Manage your daily Time In and Time Out.
-          </p>
-        </div>
+          <p>Time In and Time Out for your daily attendance.</p>
+          <span>→</span>
+        </Link>
 
-        <div
-          style={{
-            background: "white",
-            padding: "25px",
-            borderRadius: "14px",
-            boxShadow:
-              "0 5px 15px rgba(0,0,0,0.08)",
-          }}
-        >
+        <Link to="/client/records" className="client-quick-card">
+          <div className="client-icon green">📋</div>
           <h3>My Records</h3>
-          <p>
-            View your active DTR records and payroll data.
-          </p>
-        </div>
+          <p>View your active DTR records not yet archived.</p>
+          <span>→</span>
+        </Link>
 
-        <div
-          style={{
-            background: "white",
-            padding: "25px",
-            borderRadius: "14px",
-            boxShadow:
-              "0 5px 15px rgba(0,0,0,0.08)",
-          }}
-        >
-          <h3>Archives</h3>
-          <p>
-            Access your previous payroll and archived records.
-          </p>
-        </div>
+        <Link to="/client/archives" className="client-quick-card">
+          <div className="client-icon orange">🗂️</div>
+          <h3>My Archives</h3>
+          <p>Access your archived DTR records from payroll.</p>
+          <span>→</span>
+        </Link>
 
-        <div
-          style={{
-            background: "white",
-            padding: "25px",
-            borderRadius: "14px",
-            boxShadow:
-              "0 5px 15px rgba(0,0,0,0.08)",
-          }}
-        >
+        <Link to="/client/account" className="client-quick-card">
+          <div className="client-icon blue">👤</div>
           <h3>My Account</h3>
-          <p>
-            Review your account information and settings.
-          </p>
+          <p>View your employee account information.</p>
+          <span>→</span>
+        </Link>
+      </div>
+
+      <h2 className="client-section-title">Overview</h2>
+
+      <div className="client-overview-grid">
+        <div className="client-overview-card">
+          <div className="client-icon purple">📄</div>
+          <div>
+            <h4>Active Records</h4>
+            <strong>View</strong>
+            <p>DTR records not yet included in payroll.</p>
+          </div>
+        </div>
+
+        <div className="client-overview-card">
+          <div className="client-icon green">⏰</div>
+          <div>
+            <h4>Attendance</h4>
+            <strong>Time In / Out</strong>
+            <p>Manage today’s attendance entry.</p>
+          </div>
+        </div>
+
+        <div className="client-overview-card">
+          <div className="client-icon orange">🗂️</div>
+          <div>
+            <h4>Archives</h4>
+            <strong>History</strong>
+            <p>View archived payroll attendance records.</p>
+          </div>
         </div>
       </div>
     </div>

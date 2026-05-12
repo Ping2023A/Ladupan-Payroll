@@ -1,4 +1,4 @@
-const getMinutes = (time) => {
+const timeToMinutes = (time) => {
   const [hours, minutes] = time.split(":").map(Number);
   return hours * 60 + minutes;
 };
@@ -9,31 +9,35 @@ exports.calculateAttendance = ({
   timeOut,
   hourlyRate,
 }) => {
-  const requiredMinutes = getMinutes(requiredTimeIn);
-  const inMinutes = getMinutes(timeIn);
-  const outMinutes = getMinutes(timeOut);
+  const requiredMinutes = timeToMinutes(requiredTimeIn);
+  const inMinutes = timeToMinutes(timeIn);
+  const outMinutes = timeToMinutes(timeOut);
 
-  const lateMinutes = Math.max(0, inMinutes - requiredMinutes);
+  const lateMinutes = Math.max(inMinutes - requiredMinutes, 0);
 
   if (lateMinutes >= 90) {
     return {
       totalHours: 0,
-      grossPay: 0,
       lateMinutes,
+      lateHours: 0,
+      grossPay: 0,
       lateDeduction: 0,
       remarks: "Absent",
     };
   }
 
-  const totalHours = Math.max(0, (outMinutes - inMinutes) / 60);
-  const grossPay = totalHours * hourlyRate;
-  const lateDeduction = (lateMinutes / 60) * hourlyRate;
+  const workedMinutes = Math.max(outMinutes - inMinutes, 0);
+  const totalHours = Number((workedMinutes / 60).toFixed(2));
+  const lateHours = Number((lateMinutes / 60).toFixed(2));
+  const grossPay = Number((totalHours * hourlyRate).toFixed(2));
+  const lateDeduction = Number((lateHours * hourlyRate).toFixed(2));
 
   return {
-    totalHours: Number(totalHours.toFixed(2)),
-    grossPay: Number(grossPay.toFixed(2)),
+    totalHours,
     lateMinutes,
-    lateDeduction: Number(lateDeduction.toFixed(2)),
+    lateHours,
+    grossPay,
+    lateDeduction,
     remarks: lateMinutes > 0 ? "Late" : "Present",
   };
 };

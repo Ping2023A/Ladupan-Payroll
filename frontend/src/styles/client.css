@@ -1,108 +1,132 @@
-.admin-page {
-  padding: 10px;
+.client-dashboard-page {
+  padding: 30px;
+  background: #f4f4f4;
+  min-height: 100vh;
 }
 
-.admin-title {
-  font-size: 32px;
-  margin-bottom: 10px;
-  color: #111;
-}
-
-.admin-subtitle {
-  color: #666;
-  margin-bottom: 30px;
-}
-
-.admin-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-}
-
-.admin-card {
+.client-welcome-card {
   background: white;
-  padding: 25px;
-  border-radius: 14px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-}
-
-.admin-card h3 {
-  margin-top: 0;
-  color: #111;
-}
-
-.admin-card p {
-  color: #666;
-  line-height: 1.6;
-}
-
-.admin-form {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 15px;
+  border-radius: 22px;
+  padding: 35px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
   margin-bottom: 30px;
 }
 
-.admin-form input,
-.admin-form select {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  font-size: 14px;
+.client-welcome-card h1 {
+  font-size: 36px;
+  color: #000;
+  margin-bottom: 8px;
 }
 
-.admin-form input:focus,
-.admin-form select:focus {
-  outline: none;
-  border-color: #111;
+.client-welcome-card p,
+.client-welcome-card span {
+  color: #475569;
+  font-size: 16px;
 }
 
-.admin-btn {
-  background: #111;
-  color: white;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
+.client-section-title {
+  font-size: 24px;
+  margin: 25px 0 18px;
+  color: #000;
+}
+
+.client-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 22px;
+}
+
+.client-quick-card {
+  background: white;
+  border-radius: 18px;
+  padding: 28px;
+  text-decoration: none;
+  color: #000;
+  min-height: 210px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   transition: 0.2s;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
 }
 
-.admin-btn:hover {
-  background: #333;
+.client-quick-card:hover {
+  transform: translateY(-3px);
 }
 
-.admin-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+.client-quick-card h3 {
+  font-size: 22px;
+  margin: 15px 0 8px;
+}
+
+.client-quick-card p {
+  color: #475569;
+  line-height: 1.5;
+}
+
+.client-quick-card span {
+  align-self: flex-end;
+  font-size: 22px;
+}
+
+.client-icon {
+  width: 62px;
+  height: 62px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+}
+
+.client-icon.purple {
+  background: #eee5ff;
+}
+
+.client-icon.green {
+  background: #dcfce7;
+}
+
+.client-icon.orange {
+  background: #ffedd5;
+}
+
+.client-icon.blue {
+  background: #dbeafe;
+}
+
+.client-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+}
+
+.client-overview-card {
   background: white;
-  border-radius: 14px;
-  overflow: hidden;
+  border-radius: 18px;
+  padding: 25px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
 }
 
-.admin-table th {
-  background: #111;
-  color: white;
-  padding: 14px;
-  text-align: left;
+.client-overview-card h4 {
+  color: #334155;
+  font-size: 16px;
 }
 
-.admin-table td {
-  padding: 14px;
-  border-bottom: 1px solid #eee;
+.client-overview-card strong {
+  display: block;
+  font-size: 24px;
+  color: #000;
+  margin: 3px 0;
 }
 
-.admin-table tr:hover {
-  background: #f8f8f8;
-}
-
-.status-active {
-  color: green;
-  font-weight: bold;
-}
-
-.status-inactive {
-  color: red;
-  font-weight: bold;
+.client-overview-card p {
+  color: #64748b;
+  font-size: 14px;
 }

@@ -1,0 +1,138 @@
+.client-dashboard-page {
+  padding: 30px;
+  background: #f4f4f4;
+  min-height: 100vh;
+}
+
+.client-welcome-card {
+  background: white;
+  border-radius: 22px;
+  padding: 35px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+  margin-bottom: 30px;
+}
+
+.client-welcome-card h1 {
+  font-size: 36px;
+  color: #000;
+  margin-bottom: 8px;
+}
+
+.client-welcome-card p,
+.client-welcome-card span {
+  color: #475569;
+  font-size: 16px;
+}
+
+.time-card {
+  background: white;
+  border-radius: 22px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+}
+
+.time-actions {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.time-in-btn,
+.time-out-btn {
+  border: none;
+  padding: 14px 22px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  transition: 0.2s;
+}
+
+.time-in-btn {
+  background: #111827;
+  color: white;
+}
+
+.time-in-btn:hover {
+  background: #000;
+}
+
+.time-out-btn {
+  background: #e2e8f0;
+  color: #111827;
+}
+
+.time-out-btn:hover {
+  background: #cbd5e1;
+}
+
+.time-in-btn:disabled,
+.time-out-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.attendance-message {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: #334155;
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+.attendance-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.attendance-info-card {
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.attendance-info-card span {
+  display: block;
+  color: #64748b;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.attendance-info-card strong {
+  color: #111827;
+  font-size: 20px;
+}
+
+.status {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.status.present {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.status.late {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.status.absent {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.status.incomplete {
+  background: #e2e8f0;
+  color: #475569;
+}

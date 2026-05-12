@@ -1,76 +1,189 @@
 import { useEffect, useState } from "react";
 import api from "../../api/axios";
-import "../../styles/admin.css";
+import "../../styles/archives.css";
 
 const Archives = () => {
   const [records, setRecords] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("All");
 
   useEffect(() => {
     fetchArchives();
   }, []);
 
   const fetchArchives = async () => {
-    const res = await api.get("/reports/archives");
-    setRecords(res.data);
+    try {
+      setLoading(true);
+
+      const res = await api.get("/reports/archives");
+
+      const archiveList = Array.isArray(res.data)
+        ? res.data
+        : res.data.records || res.data.data || [];
+
+      setRecords(archiveList);
+    } catch (error) {
+      console.error("Error fetching archives:", error);
+      setRecords([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
+  const getEmployeeName = (employee) => {
+    if (!employee) return "Unknown";
+
+    return `${employee.firstName || ""} ${
+      employee.lastName || ""
+    }`.trim();
+  };
+
+  const formatMoney = (value) => {
+    return `₱${Number(value || 0).toFixed(2)}`;
+  };
+
+  const formatDate = (date) => {
+    if (!date) return "-";
+    return date.includes("T") ? date.slice(0, 10) : date;
+  };
+
+  const years = [
+    "All",
+    ...new Set(
+      records
+        .map((record) =>
+          new Date(record.createdAt).getFullYear().toString()
+        )
+        .filter((year) => year !== "NaN")
+    ),
+  ];
+
+  const filteredRecords = records.filter((record) => {
+    const employee = getEmployeeName(record.employee).toLowerCase();
+
+    const payrollPeriod = `${
+      record.payrollReport?.payrollPeriodStart || ""
+    } ${
+      record.payrollReport?.payrollPeriodEnd || ""
+    }`.toLowerCase();
+
+    const matchesSearch =
+      employee.includes(search.toLowerCase()) ||
+      payrollPeriod.includes(search.toLowerCase());
+
+    const recordYear = new Date(record.createdAt)
+      .getFullYear()
+      .toString();
+
+    const matchesFilter =
+      filter === "All" || recordYear === filter;
+
+    return matchesSearch && matchesFilter;
+  });
+
   return (
-    <div style={{ padding: "30px" }}>
-      <h1>Archived Attendance Records</h1>
+    <div className="archives-page">
+      <div className="archives-header">
+        <div>
+          <h1>Archived Attendance Records</h1>
 
-      <table
-        border="1"
-        cellPadding="10"
-        style={{
-          width: "100%",
-          borderCollapse: "collapse",
-        }}
-      >
-        <thead>
-          <tr>
-            <th>Employee</th>
-            <th>Date</th>
-            <th>Time In</th>
-            <th>Time Out</th>
-            <th>Total Hours</th>
-            <th>Gross Pay</th>
-            <th>Late Deduction</th>
-            <th>Remarks</th>
-            <th>Payroll Period</th>
-          </tr>
-        </thead>
+          <p>
+            View archived payroll attendance records and generated payroll periods.
+          </p>
+        </div>
+      </div>
 
-        <tbody>
-          {records.map((record) => (
-            <tr key={record._id}>
-              <td>
-                {record.employee?.firstName}{" "}
-                {record.employee?.lastName}
-              </td>
+      <div className="archives-card">
+        <div className="archives-tools">
+          <input
+            type="text"
+            placeholder="Search employee or payroll period..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
 
-              <td>{record.date}</td>
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+          >
+            {years.map((year) => (
+              <option key={year} value={year}>
+                {year === "All" ? "All Years" : year}
+              </option>
+            ))}
+          </select>
+        </div>
 
-              <td>{record.timeIn || "-"}</td>
-
-              <td>{record.timeOut || "-"}</td>
-
-              <td>{record.totalHours}</td>
-
-              <td>₱{record.grossPay}</td>
-
-              <td>₱{record.lateDeduction}</td>
-
-              <td>{record.remarks}</td>
-
-              <td>
-                {record.payrollReport?.payrollPeriodStart}
-                {" "}to{" "}
-                {record.payrollReport?.payrollPeriodEnd}
-              </td>
+        <table>
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Date</th>
+              <th>Time In</th>
+              <th>Time Out</th>
+              <th>Total Hours</th>
+              <th>Gross Pay</th>
+              <th>Late Deduction</th>
+              <th>Remarks</th>
+              <th>Payroll Period</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {loading ? (
+              <tr>
+                <td colSpan="9" className="empty-text">
+                  Loading archived records...
+                </td>
+              </tr>
+            ) : filteredRecords.length > 0 ? (
+              filteredRecords.map((record) => (
+                <tr key={record._id}>
+                  <td>{getEmployeeName(record.employee)}</td>
+
+                  <td>{formatDate(record.date)}</td>
+
+                  <td>{record.timeIn || "-"}</td>
+
+                  <td>{record.timeOut || "-"}</td>
+
+                  <td>{record.totalHours || 0}</td>
+
+                  <td>{formatMoney(record.grossPay)}</td>
+
+                  <td>{formatMoney(record.lateDeduction)}</td>
+
+                  <td>
+                    <span
+                      className={`status ${(record.remarks || "Incomplete").toLowerCase()}`}
+                    >
+                      {record.remarks || "Incomplete"}
+                    </span>
+                  </td>
+
+                  <td>
+                    {record.payrollReport?.payrollPeriodStart || "-"} to{" "}
+                    {record.payrollReport?.payrollPeriodEnd || "-"}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="9" className="empty-text">
+                  No archived attendance records found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+
+        <div className="archives-footer">
+          Showing {filteredRecords.length} archived attendance record
+          {filteredRecords.length !== 1 ? "s" : ""}
+        </div>
+      </div>
     </div>
   );
 };

@@ -25,10 +25,16 @@ body {
   flex-shrink: 0;
 }
 
+.sidebar-brand {
+  text-align: center;
+}
+
 .sidebar-logo {
   width: 100px;
   height: 100px;
-  object-fit: contain;
+  border-radius: 50%;
+  object-fit: cover;
+  overflow: hidden;
   margin: 0 auto 15px;
 }
 
@@ -60,10 +66,12 @@ body {
   font-size: 17px;
 }
 
-.sidebar nav a:hover {
+.sidebar nav a:hover,
+.sidebar nav a.active {
   background: #1f1f1f;
 }
 
+.logout-btn,
 .sidebar button {
   background: white;
   color: black;
@@ -75,6 +83,7 @@ body {
   transition: 0.2s;
 }
 
+.logout-btn:hover,
 .sidebar button:hover {
   background: #ddd;
 }
@@ -83,18 +92,5 @@ body {
   flex: 1;
   width: 100%;
   padding: 25px;
-}
-
-.topbar {
-  background: white;
-  border-radius: 16px;
-  padding: 22px 30px;
-  margin-bottom: 30px;
-  width: 100%;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-}
-
-.topbar h3 {
-  font-size: 30px;
-  color: #444;
+  overflow-x: hidden;
 }

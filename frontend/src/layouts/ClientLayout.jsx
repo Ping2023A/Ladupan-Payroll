@@ -1,10 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import logo from "../assets/ladupan-logo.png";
 import "../styles/layout.css";
 
 const ClientLayout = ({ children }) => {
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -15,51 +15,26 @@ const ClientLayout = ({ children }) => {
   return (
     <div className="layout">
       <aside className="sidebar">
-        <img
-          src={logo}
-          alt="Ladupan Logo"
-          className="sidebar-logo"
-        />
-
-        <h2>Ladupan</h2>
-        <p>Employee Portal</p>
+        <div className="sidebar-brand">
+          <img src={logo} alt="Ladupan Logo" className="sidebar-logo" />
+          <h2>Ladupan</h2>
+          <p>Employee Portal</p>
+        </div>
 
         <nav>
-          <Link to="/client/dashboard">
-            Dashboard
-          </Link>
-
-          <Link to="/client/time">
-            Time In / Out
-          </Link>
-
-          <Link to="/client/records">
-            My Records
-          </Link>
-
-          <Link to="/client/archives">
-            My Archives
-          </Link>
-
-          <Link to="/client/account">
-            My Account
-          </Link>
+          <NavLink to="/client/dashboard">Dashboard</NavLink>
+          <NavLink to="/client/time">Time In / Out</NavLink>
+          <NavLink to="/client/records">My Records</NavLink>
+          <NavLink to="/client/archives">My Archives</NavLink>
+          <NavLink to="/client/account">My Account</NavLink>
         </nav>
 
-        <button onClick={handleLogout}>
+        <button className="logout-btn" onClick={handleLogout}>
           Logout
         </button>
       </aside>
 
-      <main className="main-content">
-        <header className="topbar">
-          <h3>
-            Welcome, {user?.firstName}
-          </h3>
-        </header>
-
-        {children}
-      </main>
+      <main className="main-content">{children}</main>
     </div>
   );
 };

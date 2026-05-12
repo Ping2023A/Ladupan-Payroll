@@ -5,6 +5,7 @@ const {
   getEmployees,
   createEmployee,
   updateEmployee,
+  deleteEmployee,
 } = require("../controllers/employeeController");
 
 const { protect } = require("../middleware/authMiddleware");
@@ -25,5 +26,7 @@ router.put(
   adminOnly,
   updateEmployee
 );
+
+router.delete("/:id", protect, adminOnly, deleteEmployee);
 
 module.exports = router;

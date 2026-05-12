@@ -9,48 +9,14 @@ const {
   getAllAttendance,
 } = require("../controllers/attendanceController");
 
-const { protect } = require("../middleware/authMiddleware");
+const { protect, adminOnly } = require("../middleware/authMiddleware");
 
-const {
-  employeeOnly,
-  adminOnly,
-} = require("../middleware/roleMiddleware");
+router.post("/time-in", protect, timeIn);
+router.put("/time-out", protect, timeOut);
 
-// EMPLOYEE ROUTES
-router.post(
-  "/time-in",
-  protect,
-  employeeOnly,
-  timeIn
-);
+router.get("/my-records", protect, getMyAttendance);
+router.get("/my-archives", protect, getMyArchivedAttendance);
 
-router.post(
-  "/time-out",
-  protect,
-  employeeOnly,
-  timeOut
-);
-
-router.get(
-  "/my-records",
-  protect,
-  employeeOnly,
-  getMyAttendance
-);
-
-router.get(
-  "/my-archives",
-  protect,
-  employeeOnly,
-  getMyArchivedAttendance
-);
-
-// ADMIN ROUTES
-router.get(
-  "/all",
-  protect,
-  adminOnly,
-  getAllAttendance
-);
+router.get("/", protect, adminOnly, getAllAttendance);
 
 module.exports = router;
