@@ -1,0 +1,100 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f4f4f4;
+  font-family: Arial, sans-serif;
+}
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.sidebar {
+  width: 260px;
+  background: #050505;
+  color: white;
+  padding: 25px 20px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.sidebar-logo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin: 0 auto 15px;
+}
+
+.sidebar h2 {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 5px;
+}
+
+.sidebar p {
+  text-align: center;
+  color: #bbb;
+  margin-bottom: 35px;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.sidebar nav a {
+  text-decoration: none;
+  color: white;
+  padding: 14px;
+  border-radius: 12px;
+  transition: 0.2s;
+  font-size: 17px;
+}
+
+.sidebar nav a:hover {
+  background: #1f1f1f;
+}
+
+.sidebar button {
+  background: white;
+  color: black;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.sidebar button:hover {
+  background: #ddd;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  padding: 25px;
+}
+
+.topbar {
+  background: white;
+  border-radius: 16px;
+  padding: 22px 30px;
+  margin-bottom: 30px;
+  width: 100%;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.topbar h3 {
+  font-size: 30px;
+  color: #444;
+}
